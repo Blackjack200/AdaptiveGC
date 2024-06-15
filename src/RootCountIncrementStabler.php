@@ -6,7 +6,7 @@ final class RootCountIncrementStabler {
 	private function __construct() { }
 
 
-	private const int MAX_SAMPLE_COUNT = 500;
+	private const MAX_SAMPLE_COUNT = 500;
 	public static float $smoothingFactor = 0.5; // Smoothing factor for EMA
 	private static float $lastEma = 0;
 	private static array $samples = [];

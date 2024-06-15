@@ -29,7 +29,7 @@ class Main extends PluginBase {
 		}
 		AdaptiveGcHandler::$logger = $this->getLogger();
 		$this->reloadConfig();
-		$notifierEntry = Server::getInstance()->getTickSleeper()->addNotifier(AdaptiveGcHandler::run(...));
+		$notifierEntry = Server::getInstance()->getTickSleeper()->addNotifier(static fn() => AdaptiveGcHandler::run());
 		$this->notifierId = $notifierEntry->getNotifierId();
 		$notifier = $notifierEntry->createNotifier();
 		$this->taskHandler = $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(static fn() => $notifier->wakeupSleeper()), 1);

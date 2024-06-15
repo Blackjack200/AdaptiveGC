@@ -6,8 +6,8 @@ final class GcTimePredictor {
 	private function __construct() { }
 
 
-	private const int MAX_SAMPLE_COUNT = 500;
-	private const float MULTIPLY_FACTOR = 1.05;
+	private const MAX_SAMPLE_COUNT = 500;
+	private const MULTIPLY_FACTOR = 1.05;
 	public static float $smoothingFactor = 0.5; // Smoothing factor for EMA
 	private static float $lastEma = 0;
 	private static array $gcTimeSamples = [];
