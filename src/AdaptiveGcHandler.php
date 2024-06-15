@@ -23,7 +23,6 @@ final class AdaptiveGcHandler {
 	public static bool $avoidTimeExceed = true;
 	public static float $gcSkipThresholdRatio = 0.01;
 	public static float $thresholdPct = 90;
-	public static bool $rootCountAvailable = true;
 	public static float $forceRootCount = 500000;
 
 	private static int $lastRootCount;
@@ -76,7 +75,7 @@ final class AdaptiveGcHandler {
 		$tickRemaining = (self::$getNextTick->call($ser) - $now);
 		$tickRemainingPct = number_format($tickRemaining / Server::TARGET_TICKS_PER_SECOND, 3);
 
-		if (self::$rootCountAvailable && self::getRootCount() >= self::$forceRootCount) {
+		if (self::getRootCount() >= self::$forceRootCount) {
 			goto gc;
 		}
 

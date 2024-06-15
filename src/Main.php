@@ -20,7 +20,8 @@ class Main extends PluginBase {
 		$logger = $this->getLogger();
 		if (!is_int(gc_status()['roots'] ?? null)) {
 			$logger->info('Gc root count is unavailable in php ' . PHP_VERSION . '.');
-			AdaptiveGcHandler::$rootCountAvailable = false;
+			$this->getServer()->getPluginManager()->disablePlugin($this);
+			return;
 		}
 		if (!AdaptiveGcHandler::checkPocketMineAvailability()) {
 			$logger->info('AdaptiveGC is not compatible with your PocketMine-MP.');
@@ -63,7 +64,7 @@ class Main extends PluginBase {
 			case 'gc_status':
 				$status = gc_status();
 				$sender->sendMessage("Gc runs: " . (((string) $status['runs']) ?? 'unavailable') . '.');
-				$sender->sendMessage("Possibly roots: " . (((string) $status['roots']) ?? 'unavailable') . '.');
+				$sender->sendMessage("Possibly roots: " . (string) (($status['roots']) ?? 'unavailable') . '.');
 				$sender->sendMessage("Actual Gc: " . number_format(1000 * GcTimePredictor::getLastActualGcTime(), 3) . "ms.");
 				$sender->sendMessage("Predicted Gc: " . number_format(1000 * GcTimePredictor::getPredictedGcTime(), 3) . "ms.");
 				return true;
