@@ -1,0 +1,17 @@
+name: AdaptiveGC
+version: 0.0.1
+main: Blackjack200\AdaptiveGC\Main
+api: 5.0.0
+src-namespace-prefix: Blackjack200\AdaptiveGC
+commands:
+  gc_status:
+    description: show gc status
+    permission: adaptive_gc.gc_status
+  adaptive_gc_reload:
+    description: reload adaptive gc config
+    permission: adaptive_gc.adaptive_gc_reload
+permissions:
+  adaptive_gc.gc_status:
+    default: op
+  adaptive_gc.adaptive_gc_reload:
+    default: op
