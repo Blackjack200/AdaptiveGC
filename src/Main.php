@@ -54,7 +54,7 @@ class Main extends PluginBase {
 		AdaptiveGcHandler::$avoidTimeExceed = (bool) $config->get('avoid-time-exceed', AdaptiveGcHandler::$avoidTimeExceed);
 		AdaptiveGcHandler::$triggerNoPlayer = (bool) $config->get('trigger-no-player', AdaptiveGcHandler::$triggerNoPlayer);
 		AdaptiveGcHandler::$forceRootCount = (int) $config->get('force-root-count', AdaptiveGcHandler::$forceRootCount);
-		AdaptiveGcHandler::$gcSkipThresholdRatio = (int) $config->get('gc-skip-threshold-ratio', AdaptiveGcHandler::$gcSkipThresholdRatio);
+		AdaptiveGcHandler::$gcSkipThresholdRatio = (float) $config->get('gc-skip-threshold-ratio', AdaptiveGcHandler::$gcSkipThresholdRatio);
 
 		GcTimePredictor::$smoothingFactor = (float) $config->get('smoothing-factor', GcTimePredictor::$smoothingFactor);
 	}

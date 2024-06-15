@@ -82,7 +82,8 @@ final class AdaptiveGcHandler {
 		$increased = self::getRootCountIncreased();
 		RootCountIncrementStabler::submitIncrement($increased);
 		$predicted = RootCountIncrementStabler::getStableIncrement();
-		if ($predicted !== 0.0 && (($increased - $predicted) / $predicted) < self::$gcSkipThresholdRatio) {
+		$ratio = ($increased - $predicted) / $predicted;
+		if ($predicted !== 0.0 && $ratio < self::$gcSkipThresholdRatio) {
 			//skip gc
 			return;
 		}
