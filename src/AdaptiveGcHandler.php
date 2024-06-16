@@ -42,20 +42,31 @@ final class AdaptiveGcHandler {
 	}
 
 	public static function checkPocketMineAvailability() : bool {
+		$memoryManager = Server::getInstance()->getMemoryManager();
 		try {
-			$property = new ReflectionProperty(Server::getInstance(), 'nextTick');
+			$propertyNextTick = new ReflectionProperty(Server::getInstance(), 'nextTick');
+			$propertyPeriod = new ReflectionProperty($memoryManager, 'garbageCollectionPeriod');
 		} catch (ReflectionException $e) {
 			self::$logger->error('Error occurred when checking PocketMine-MP availability.');
 			self::$logger->logException($e);
 			return false;
 		}
-		$typ = $property->getType();
+		$typ = $propertyNextTick->getType();
 		if ($typ === null) {
 			return false;
 		}
 		if ($typ->getName() !== 'float') {
 			return false;
 		}
+		$typ = $propertyPeriod->getType();
+		if ($typ === null) {
+			return false;
+		}
+		if ($typ->getName() !== 'int') {
+			return false;
+		}
+		$propertyPeriod->setAccessible(true);
+		$propertyPeriod->setValue($memoryManager, 0);
 		/** @phpstan-ignore-next-line */
 		self::$getNextTick = fn() => $this->nextTick;
 		self::$gc = new TimingsHandler('AdaptiveGC', Timings::$garbageCollector);
