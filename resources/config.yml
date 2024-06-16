@@ -1,5 +1,5 @@
 #Will only run gc when tick used percentage is lower or equal to given value (default 10).
-trigger-percentage: 10
+trigger-percentage: 0.10
 #Will cancel gc if gc may exceed server tick time.
 avoid-time-exceed: true
 #Will only run gc when player count is 0 (default true).

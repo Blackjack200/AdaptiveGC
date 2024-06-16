@@ -88,7 +88,7 @@ final class AdaptiveGcHandler {
 		$now = microtime(true);
 
 		$tickRemaining = (self::$getNextTick->call($ser) - $now);
-		$tickRemainingPct = number_format($tickRemaining / Server::TARGET_TICKS_PER_SECOND, 3);
+		$tickRemainingPct = number_format($tickRemaining / Server::TARGET_SECONDS_PER_TICK, 3);
 
 		if (self::getRootCount() >= self::$forceRootCount) {
 			goto gc;
