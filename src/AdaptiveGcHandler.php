@@ -121,8 +121,7 @@ final class AdaptiveGcHandler {
 		$gcStart = microtime(true);
 
 		self::$gc->startTiming();
-		gc_collect_cycles();
-		gc_mem_caches();
+		$ser->getMemoryManager()->triggerGarbageCollector();
 		self::$gc->stopTiming();
 
 		$gcTime = microtime(true) - $gcStart;
