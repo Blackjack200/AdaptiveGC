@@ -29,6 +29,10 @@ final class AdaptiveGcHandler {
 
 	private function __construct() { }
 
+	public static function getThreshold() : int {
+		return gc_status()['threshold'] ?? throw new RuntimeException('unsupported root count');
+	}
+
 	public static function getRootCount() : int {
 		return gc_status()['roots'] ?? throw new RuntimeException('unsupported root count');
 	}
@@ -97,7 +101,7 @@ final class AdaptiveGcHandler {
 		}
 
 		$predictedMaxGcTime = GcTimePredictor::getPredictedMaxGcTime();
-		if ($predictedMaxGcTime !== 0.0 && $predictedMaxGcTime >= $tickRemaining) {
+		if (self::$avoidTimeExceed && $predictedMaxGcTime !== 0.0 && $predictedMaxGcTime >= $tickRemaining) {
 			self::$logger->debug('Predicted gc time is ' . (self::$formatMs)($predictedMaxGcTime) . ', but current tick just have ' . (self::$formatMs)($tickRemaining) . ' left, skipping gc.');
 			return;
 		}
