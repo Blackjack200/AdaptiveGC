@@ -18,11 +18,6 @@ class Main extends PluginBase {
 
 	protected function onEnable() : void {
 		$logger = $this->getLogger();
-		if (!is_int(gc_status()['roots'] ?? null)) {
-			$logger->info('Advanced gc_status is unavailable in php ' . PHP_VERSION . '.');
-			$this->getServer()->getPluginManager()->disablePlugin($this);
-			return;
-		}
 		if (!AdaptiveGcHandler::checkPocketMineAvailability()) {
 			$logger->info('AdaptiveGC is not compatible with your PocketMine-MP.');
 			$this->getServer()->getPluginManager()->disablePlugin($this);

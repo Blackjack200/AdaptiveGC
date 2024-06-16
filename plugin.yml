@@ -3,6 +3,8 @@ version: 0.0.1
 main: Blackjack200\AdaptiveGC\Main
 api: 5.0.0
 src-namespace-prefix: Blackjack200\AdaptiveGC
+extensions:
+  core: ">= 8.3.0"
 commands:
   gc_status:
     description: show gc status
