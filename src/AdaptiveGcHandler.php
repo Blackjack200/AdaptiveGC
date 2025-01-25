@@ -66,7 +66,7 @@ final class AdaptiveGcHandler {
 			return false;
 		}
 		$propertyPeriod->setAccessible(true);
-		$propertyPeriod->setValue($memoryManager, 0);
+		$propertyPeriod->setValue($memoryManager, -100);
 		/** @phpstan-ignore-next-line */
 		self::$getNextTick = fn() => $this->nextTick;
 		self::$gc = new TimingsHandler('AdaptiveGC', Timings::$garbageCollector);
