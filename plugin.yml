@@ -1,5 +1,5 @@
 name: AdaptiveGC
-version: 0.0.2
+version: 0.0.3
 main: Blackjack200\AdaptiveGC\Main
 api: 5.0.0
 src-namespace-prefix: Blackjack200\AdaptiveGC

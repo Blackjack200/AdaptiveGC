@@ -6,13 +6,15 @@ namespace Blackjack200\AdaptiveGC;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\scheduler\TaskHandler;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
-class Main extends PluginBase {
+class Main extends PluginBase implements Listener {
 	private ?int $notifierId = null;
 	private ?TaskHandler $taskHandler = null;
 
@@ -28,7 +30,8 @@ class Main extends PluginBase {
 		$notifierEntry = Server::getInstance()->getTickSleeper()->addNotifier(static fn() => AdaptiveGcHandler::run());
 		$this->notifierId = $notifierEntry->getNotifierId();
 		$notifier = $notifierEntry->createNotifier();
-		$this->taskHandler = $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(static fn() => $notifier->wakeupSleeper()), 1);
+		$this->taskHandler = $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(static fn() => $notifier->wakeupSleeper()), 10);
+		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 	}
 
 	protected function onDisable() : void {
@@ -69,5 +72,12 @@ class Main extends PluginBase {
 				return true;
 		}
 		return false;
+	}
+
+	public function onPlayerQuit(PlayerQuitEvent $event) : void {
+		$count = count($this->getServer()->getOnlinePlayers()) - 1;
+		if ($count === 0) {
+			AdaptiveGcHandler::run(true);
+		}
 	}
 }

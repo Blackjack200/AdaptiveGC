@@ -75,9 +75,12 @@ final class AdaptiveGcHandler {
 		return true;
 	}
 
-	public static function run() : void {
+	public static function run(bool $force = false) : void {
 		if (!self::$enabled) {
 			return;
+		}
+		if ($force) {
+			goto gc;
 		}
 		if (gc_enabled()) {
 			self::$logger->debug('Detected auto GC is enabled, disabling auto GC.');
