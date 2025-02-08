@@ -79,9 +79,7 @@ final class AdaptiveGcHandler {
 		if (!self::$enabled) {
 			return;
 		}
-		if ($force) {
-			goto gc;
-		}
+
 		if (gc_enabled()) {
 			self::$logger->debug('Detected auto GC is enabled, disabling auto GC.');
 			gc_disable();
@@ -92,6 +90,10 @@ final class AdaptiveGcHandler {
 
 		$tickRemaining = (self::$getNextTick->call($ser) - $now);
 		$tickRemainingPct = number_format($tickRemaining / Server::TARGET_SECONDS_PER_TICK, 3);
+
+		if ($force) {
+			goto gc;
+		}
 
 		if (self::getRootCount() >= self::$forceRootCount) {
 			goto gc;
